@@ -1,5 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const addToList = require('./routes/addList');
+
+
 require('dotenv').config();
 
 
@@ -22,7 +27,11 @@ const db = mongoose.connection;
 db.once('open', () => {
     console.log('Connected to MongoDB');
     
-    
+    app.use(bodyParser.json());
+
+    app.use(addToList);
+
+
     app.listen(port, () => {
         console.log(`Server is running on port http://localhost:${port}`);
     });
